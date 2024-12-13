@@ -1,4 +1,4 @@
-# Xylem Data Plate Textract Tool
+# Data Plate Textract Tool
 
 ## Overview
 This tool allows users to upload an image of a pump data plate, extract GPS coordinates embedded in the image's EXIF data, and process text data using AWS Textract. It also appends the extracted data to an Excel file for further use.
