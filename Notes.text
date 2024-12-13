@@ -1,0 +1,12 @@
+pip install Pillow==9.0.0
+https://www.google.com/maps?q=25.135783333333332,55.23911666666667
+
+https://www.google.com/maps?q=55.239117,55.239117
+
+https://www.google.com/maps?q={25.135783},{55.239117}
+
+http://maps.google.com/?ie=UTF8&hq=&ll=25.135783,55.239117&z=13
+
+25.135783, 55.239117
+
+https://www.google.com/maps/search/?api=1&query=25.135783,55.239117
