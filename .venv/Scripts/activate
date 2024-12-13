@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\SSantho\OneDrive - Xylem, Inc\Documents\WFH\Coding\Xylem\Dataplate_Textract\.venv"
+VIRTUAL_ENV="C:\Users\SSantho\OneDrive - Xylem, Inc\Documents\WFH\Sunil\Coding\Xylem\Dataplate_Textract\.venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

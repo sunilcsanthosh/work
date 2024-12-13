@@ -9,7 +9,7 @@ import openpyxl
 
 def upload_file():
     global img
-    aws_mag_con = boto3.session.Session(profile_name ='Anumol')
+    aws_mag_con = boto3.session.Session(profile_name ='Anumol') // Sunil's personal AWS account  
     client = aws_mag_con.client(service_name ='textract',region_name = 'us-east-1')
 
     f_types = [('Jpg Files',"*.jpg")]
@@ -43,14 +43,16 @@ def upload_file():
         print(f"Site GPS cordinates details : Latitude,Longitude {latitude},{longitude}")
     else:
         print("No GPS coordinates found.")
+        latitude =00
+        longitude =00
 
     # Initialize an empty string to store the combined text
     combined_text = ""
 # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/textract/client/detect_document_text.html
     response = client.detect_document_text(Document={'Bytes':imgbytes})
+
     for item in response['Blocks']:
         if item['BlockType']=='LINE':
-            #print(item['Text'])
             combined_text += item['Text'] + "\n"
     
     print(combined_text)

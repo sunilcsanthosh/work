@@ -22,6 +22,7 @@ configuration options:
 * The ``user_agent_extra`` field in the :py:class:`botocore.config.Config`.
 
 """
+
 import os
 import platform
 from copy import copy
@@ -114,6 +115,16 @@ class RawStringUserAgentComponent:
 
     def to_string(self):
         return self._value
+
+
+# This is not a public interface and is subject to abrupt breaking changes.
+# Any usage is not advised or supported in external code bases.
+try:
+    from botocore.customizations.useragent import modify_components
+except ImportError:
+    # Default implementation that returns unmodified User-Agent components.
+    def modify_components(components):
+        return components
 
 
 class UserAgentString:
@@ -271,6 +282,9 @@ class UserAgentString:
             *self._build_app_id(),
             *self._build_extra(),
         ]
+
+        components = modify_components(components)
+
         return ' '.join([comp.to_string() for comp in components])
 
     def _build_sdk_metadata(self):

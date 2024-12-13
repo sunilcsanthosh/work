@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\SSantho\OneDrive - Xylem, Inc\Documents\WFH\Coding\Xylem\Dataplate_Textract\.venv
+set VIRTUAL_ENV=C:\Users\SSantho\OneDrive - Xylem, Inc\Documents\WFH\Sunil\Coding\Xylem\Dataplate_Textract\.venv
 
 if not defined PROMPT set PROMPT=$P$G
 

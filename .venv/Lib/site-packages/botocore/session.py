@@ -557,11 +557,11 @@ class Session:
             f'{platform.system()}/{platform.release()}'
         )
         if HAS_CRT:
-            base += ' awscrt/%s' % self._get_crt_version()
+            base += f' awscrt/{self._get_crt_version()}'
         if os.environ.get('AWS_EXECUTION_ENV') is not None:
-            base += ' exec-env/%s' % os.environ.get('AWS_EXECUTION_ENV')
+            base += ' exec-env/{}'.format(os.environ.get('AWS_EXECUTION_ENV'))
         if self.user_agent_extra:
-            base += ' %s' % self.user_agent_extra
+            base += f' {self.user_agent_extra}'
 
         return base
 
@@ -615,7 +615,7 @@ class Session:
         )
         service_id = EVENT_ALIASES.get(service_name, service_name)
         self._events.emit(
-            'service-data-loaded.%s' % service_id,
+            f'service-data-loaded.{service_id}',
             service_data=service_data,
             service_name=service_name,
             session=self,
@@ -803,9 +803,9 @@ class Session:
         except ValueError:
             if name in ['endpoint_resolver', 'exceptions_factory']:
                 warnings.warn(
-                    'Fetching the %s component with the get_component() '
+                    f'Fetching the {name} component with the get_component() '
                     'method is deprecated as the component has always been '
-                    'considered an internal interface of botocore' % name,
+                    'considered an internal interface of botocore',
                     DeprecationWarning,
                 )
                 return self._internal_components.get_component(name)
@@ -1141,11 +1141,19 @@ class ComponentLocator:
             # Only delete the component from the deferred dict after
             # successfully creating the object from the factory as well as
             # injecting the instantiated value into the _components dict.
-            del self._deferred[name]
+            try:
+                del self._deferred[name]
+            except KeyError:
+                # If we get here, it's likely that get_component was called
+                # concurrently from multiple threads, and another thread
+                # already deleted the entry. This means the factory was
+                # probably called twice, but cleaning up the deferred entry
+                # should not crash outright.
+                pass
         try:
             return self._components[name]
         except KeyError:
-            raise ValueError("Unknown component: %s" % name)
+            raise ValueError(f"Unknown component: {name}")
 
     def register_component(self, name, component):
         self._components[name] = component
